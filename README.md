@@ -41,10 +41,18 @@ jev_decide({
 { "model": "jev-latest", "timeoutMs": 15000, "baseUrl": "https://api.typesafe.ai/v1" }
 ```
 
-## 安装/接线（本机已完成的步骤）
+## 安装/接线
 
-1. 源码：`/Users/nanami/dsh/plugins/dsh-jev-decide/`
-2. `~/.dsh/profiles/web/package.json` 依赖：`"dsh-jev-decide": "link:/Users/nanami/dsh/plugins/dsh-jev-decide"`
+**插件市场（npm 上架后）**：
+
+```sh
+dsh plugin --profile web add dsh-jev-decide
+```
+
+**手动接线（本机已完成的步骤）**：
+
+1. 源码：`~/dsh/plugins/dsh-jev-decide/`
+2. `~/.dsh/profiles/web/package.json` 依赖：`"dsh-jev-decide": "link:~/dsh/plugins/dsh-jev-decide"`
 3. `~/.dsh/profiles/web/cordis.patch.yml`：`- insert: [- id: dsh-jev-decide, name: dsh-jev-decide]`
 4. 因无 shell 无法建 pnpm symlink，`profiles/web/node_modules/dsh-jev-decide/` 放的是实体副本；下次 `pnpm install` 会把它规范成 link，无副作用。
 5. **生效需重启 DSH**（host 插件在进程启动时装配）。
