@@ -1,5 +1,9 @@
 # dsh-jev-decide
 
+[![npm version](https://img.shields.io/npm/v/dsh-jev-decide.svg)](https://www.npmjs.com/package/dsh-jev-decide)
+[![license](https://img.shields.io/npm/l/dsh-jev-decide.svg)](./LICENSE)
+[![DSH 插件市场](https://img.shields.io/badge/DSH-插件市场-blue)](https://awesome-dsh-plugin.com/)
+
 把 [TypeSafe Jev](https://docs.typesafe.ai/)（"System One" 决策模型）接入 DSH：注册一个 agent 工具 **`jev_decide`**，让 agent 在需要"快而准的判断"时调用 Jev，而不是让对话模型凭感觉猜。
 
 ## 为什么不是"再加一个对话模型"
@@ -41,15 +45,21 @@ jev_decide({
 { "model": "jev-latest", "timeoutMs": 15000, "baseUrl": "https://api.typesafe.ai/v1" }
 ```
 
-## 安装/接线
+## 安装 / 接线
 
-**插件市场（npm 上架后）**：
+**方式一：npm（已上架，[包页](https://www.npmjs.com/package/dsh-jev-decide)）**：
 
 ```sh
 dsh plugin --profile web add dsh-jev-decide
+# 或纯 npm 侧安装（宿主运行时提供 @deepseek-ai/dsh-tools peer）
+npm install dsh-jev-decide
 ```
 
-**手动接线（本机已完成的步骤）**：
+发版即自动发布：`git tag vX.Y.Z && git push --tags` → GitHub Actions 以 OIDC 免 token 发布（带 [provenance 签名](https://search.sigstore.dev/?logIndex=2890905882)），无需任何长期 npm 凭据。
+
+**方式二：插件市场**（收录 PR [#5428](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/5428) 合并后自动出现在 `awesome-dsh-plugin.com` 与 DSH 内置市场）。
+
+**方式三：手动接线**：
 
 1. 源码：`~/dsh/plugins/dsh-jev-decide/`
 2. `~/.dsh/profiles/web/package.json` 依赖：`"dsh-jev-decide": "link:~/dsh/plugins/dsh-jev-decide"`
