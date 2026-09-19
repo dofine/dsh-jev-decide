@@ -1,0 +1,25 @@
+# 发版即发布：git tag vX.Y.Z && git push --tags 触发。
+# 前提：首次手动 `npm publish` 建包后，在 npmjs.com 包页 Settings → Trusted Publisher
+# 绑定本仓库（owner=nanami-0713, repo=dsh-jev-decide, workflow=publish.yml）。
+# 绑定后本 workflow 依赖 OIDC（id-token: write）完成免 token 发布，无需任何 secret。
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm publish
