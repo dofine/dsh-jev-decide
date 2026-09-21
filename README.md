@@ -17,11 +17,20 @@
 ## 安装
 
 ```sh
-dsh plugin --profile web add dsh-jev-decide        # npm
-dsh plugin --profile web add link:/path/to/source  # 本地源码（先在源码目录跑一次 npm install 物化 peer）
+dsh plugin --profile web add dsh-jev-decide                   # npm 0.1.1
+dsh plugin --profile web add github:dofine/dsh-jev-decide     # 本仓库 HEAD（含凭证缝修复）
+dsh plugin --profile web add link:/path/to/source             # 本地源码（先在源码目录跑一次 npm install 物化 peer）
 ```
 
-**生效需重启 DSH**（host 插件在进程启动时装配）。发版：`git tag vX.Y.Z && git push --tags`，CI 用 OIDC 免 token 发布（带 provenance 签名）。
+插件未声明 `dsh.bundle`，`add` 只把它装成依赖；还要挂进 profile，在 `~/.dsh/profiles/web/cordis.patch.yml` 加：
+
+```yaml
+- insert:
+    - id: dsh-jev-decide
+      name: dsh-jev-decide
+```
+
+**生效需重启 DSH**（host 插件在进程启动时装配）。npm 包 `dsh-jev-decide` 的发布权在包主（见 package.json 的 repository），本仓库只作 fork 分发。
 
 ## 凭证
 
