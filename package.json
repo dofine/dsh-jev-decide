@@ -13,6 +13,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "test": "node --test tests"
+  },
+  "devDependencies": {
+    "@deepseek-ai/dsh-tools": ">=0.1.0-rc.6"
+  },
   "peerDependencies": {
     "@deepseek-ai/dsh-tools": ">=0.1.0-rc.6"
   },

@@ -34,8 +34,23 @@ jev_decide({
 ## 凭证解析顺序
 
 1. 插件配置的 `apiKey`（cordis patch config 或数据目录 config.json）
-2. 环境变量 `TYPESAFE_API_KEY`
-3. `~/.dsh/.credentials.yaml` 的 `refs.TYPESAFE_AI_API_KEY`（与 DSH 凭证缝同源——本机已配置，无需重复）
+2. 环境变量 `TYPESAFE_API_KEY`（与 DSH 自身 `DEEPSEEK_API_KEY=… dsh` 的习惯一致）
+3. `ctx.credentials.resolve('TYPESAFE_AI_API_KEY')`——DSH 的**凭证缝**
+
+第 3 层交给凭证缝，本插件不自己读 `$DSH_HOME/.credentials.yaml`。理由：
+
+- 缝按 **YAML 语义**解析（`yaml` 的 `parseDocument`），外层引号、块标量、行尾注释、缩进都正确；自己写正则扫行会把 `KEY: "…"` 的**引号当成值的一部分**，TypeSafe 直接返回 `401 authentication_error`。
+- 缝自带**分层覆盖**：继承的环境变量 > 项目 `.env` > `$DSH_HOME/.env` > 凭证文件，`ResolvedCredential.source` 会告诉你是哪一层给的。
+- 正则扫行还会误命中 `records/` 子树或注释里同名的一行——它只是在全文件里找"第一个两空格缩进的 `KEY:`"，并没有真正定位到 `refs:` 映射。
+
+凭证 provider（`@deepseek-ai/dsh-credentials-local`）在 `dsh` base bundle 里已经挂载；未挂载该服务的精简组合里，第 3 层直接被跳过，工具会报出检查过的三层。
+
+## 测试
+
+```sh
+npm install   # peer 依赖 @deepseek-ai/dsh-tools 也会装上
+npm test      # node --test：优先级、空白值、异常兜底，以及一次 fetch 桩的端到端
+```
 
 ## 配置
 
