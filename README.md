@@ -17,15 +17,14 @@
 ## 安装
 
 ```sh
-dsh plugin --profile web add dsh-jev-decide                   # npm（0.1.1，无凭证缝修复）
-dsh plugin --profile web add github:dofine/dsh-jev-decide     # 本仓库 HEAD（含凭证缝修复）
+dsh plugin --profile web add dsh-jev-decide                   # npm 上的 0.1.1
+dsh plugin --profile web add github:dofine/dsh-jev-decide     # 本仓库（推荐）
 dsh plugin --profile web add link:/path/to/source             # 本地源码（先在源码目录跑一次 npm install 物化 peer）
 ```
 
 本包声明了 `dsh.bundle.patch`，`add` 会自动把它写进 profile 的 `dsh.profile.bundles`，并加载仓库里的 `cordis.patch.yml` —— 不需要手改 profile。**重启 DSH 生效**（host 插件在进程启动时装配）。
 
-> 0.1.1（npm 上的那份）没有声明 bundle，那时只能手写一行 insert。若你之前手写过，升级到本仓库版本时**删掉那行**，否则同一个插件会挂两次（重复 id）。
-
+> 从 0.1.1 升级：若你曾按旧版说明手写过一行 insert，删掉它，否则同一个插件会挂两次（重复 id）。
 
 ## 凭证
 
@@ -33,9 +32,7 @@ dsh plugin --profile web add link:/path/to/source             # 本地源码（�
 
 1. 插件配置 `apiKey`（cordis patch 的 `config:`，或 `$DSH_HOME/plugins/dsh-jev-decide/config.json`）
 2. 环境变量 `TYPESAFE_API_KEY`
-3. `ctx.credentials.resolve('TYPESAFE_AI_API_KEY')` —— DSH 凭证缝
-
-第 3 层走凭证缝，本插件不自己读 `~/.dsh/.credentials.yaml`：缝按 YAML 语义解析（引号、注释、缩进都对），自带分层覆盖（继承环境 > 项目 `.env` > `$DSH_HOME/.env` > 凭证文件）并回报来源层；自己写正则扫行会把 `KEY: "…"` 的引号当成值的一部分，TypeSafe 直接返回 401。凭证 provider 挂在 `dsh` base bundle 上；精简组合里没有该服务时第 3 层被跳过，工具会报出检查过的三层。
+3. DSH 凭证缝：`~/.dsh/.credentials.yaml` 里 `refs.TYPESAFE_AI_API_KEY`
 
 ## 工具签名
 
