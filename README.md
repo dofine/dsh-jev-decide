@@ -1,7 +1,6 @@
 # dsh-jev-decide
 
-[![npm version](https://img.shields.io/npm/v/dsh-jev-decide.svg)](https://www.npmjs.com/package/dsh-jev-decide)
-[![license](https://img.shields.io/npm/l/dsh-jev-decide.svg)](./LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![DSH 插件市场](https://img.shields.io/badge/DSH-插件市场-blue)](https://awesome-dsh-plugin.com/)
 
 把 [TypeSafe Jev](https://docs.typesafe.ai/)（"System One" 决策模型）接入 DSH：注册一个 agent 工具 **`jev_decide`**，让 agent 用校准过的概率做判断，而不是让对话模型凭感觉猜。Jev 不生成文本，只对 `state` 回答类型化问题：
