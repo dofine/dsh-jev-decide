@@ -17,14 +17,13 @@
 ## 安装
 
 ```sh
-dsh plugin --profile web add dsh-jev-decide                   # npm 上的 0.1.1
-dsh plugin --profile web add github:dofine/dsh-jev-decide     # 本仓库 0.1.2（推荐）
+dsh plugin --profile web add github:dofine/dsh-jev-decide     # 本仓库 0.1.2
 dsh plugin --profile web add link:/path/to/source             # 本地源码（先在源码目录跑一次 npm install 物化 peer）
 ```
 
 本包声明了 `dsh.bundle.patch`，`add` 会自动把它写进 profile 的 `dsh.profile.bundles`，并加载仓库里的 `cordis.patch.yml` —— 不需要手改 profile。**重启 DSH 生效**（host 插件在进程启动时装配）。
 
-> 从 0.1.1 升级：若你曾按旧版说明手写过一行 insert，删掉它，否则同一个插件会挂两次（重复 id）。
+> 若你曾按旧版说明手写过一行 insert，删掉它，否则同一个插件会挂两次（重复 id）。
 
 ## 凭据
 
