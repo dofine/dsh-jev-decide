@@ -1,0 +1,10 @@
+# 当本包出现在 profile 的 dsh.profile.bundles 里时由启动器应用。
+# 声明了 dsh.bundle.patch 之后，`dsh plugin --profile <name> add <spec>` 会自动把本包
+# 写进 bundles 并加载这份 patch，因此安装不需要再手改 profile 的 cordis.patch.yml。
+- insert:
+    - id: dsh-jev-decide
+      name: dsh-jev-decide
+      # config:
+      #   model: jev-latest
+      #   timeoutMs: 15000
+      #   baseUrl: https://api.typesafe.ai/v1

@@ -8,8 +8,14 @@
   "files": [
     "lib",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "cordis.patch.yml"
   ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
