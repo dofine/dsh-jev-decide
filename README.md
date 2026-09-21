@@ -51,9 +51,11 @@ jev_decide({
 
 ```sh
 dsh plugin --profile web add dsh-jev-decide
-# 或纯 npm 侧安装（宿主运行时提供 @deepseek-ai/dsh-tools peer）
+# 或纯 npm 侧安装（npm ≥7 / pnpm auto-install-peers 会自动装 @deepseek-ai/dsh-tools peer）
 npm install dsh-jev-decide
 ```
+
+> peer 解析注意：宿主**不会**把捆绑的 `@deepseek-ai/dsh-tools` 注入插件的模块解析链。经 npm/pnpm 安装时 peer 会被自动物化；若以 `link:`/本地路径方式接入插件源码目录，需在插件目录内先跑一次 `npm install` 把 peer 物化（`>=0.1.0-rc.6` 的 semver 预发布匹配只会选到 0.1.0-rc.x 元组，属预期——插件只消费 `defineTool` 一个纯函数，跨宿主版本已实测兼容）。
 
 发版即自动发布：`git tag vX.Y.Z && git push --tags` → GitHub Actions 以 OIDC 免 token 发布（带 [provenance 签名](https://search.sigstore.dev/?logIndex=2890905882)），无需任何长期 npm 凭据。
 
