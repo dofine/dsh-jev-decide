@@ -42,10 +42,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nanami-0713/dsh-jev-decide.git"
+    "url": "git+https://github.com/dofine/dsh-jev-decide.git"
   },
   "bugs": {
-    "url": "https://github.com/nanami-0713/dsh-jev-decide/issues"
+    "url": "https://github.com/dofine/dsh-jev-decide/issues"
   },
-  "homepage": "https://github.com/nanami-0713/dsh-jev-decide#readme"
+  "homepage": "https://github.com/dofine/dsh-jev-decide#readme"
 }
