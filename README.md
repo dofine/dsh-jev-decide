@@ -18,7 +18,7 @@
 
 ```sh
 dsh plugin --profile web add dsh-jev-decide                   # npm 上的 0.1.1
-dsh plugin --profile web add github:dofine/dsh-jev-decide     # 本仓库（推荐）
+dsh plugin --profile web add github:dofine/dsh-jev-decide     # 本仓库 0.1.2（推荐）
 dsh plugin --profile web add link:/path/to/source             # 本地源码（先在源码目录跑一次 npm install 物化 peer）
 ```
 
