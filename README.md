@@ -26,13 +26,13 @@ dsh plugin --profile web add link:/path/to/source             # 本地源码（�
 
 > 从 0.1.1 升级：若你曾按旧版说明手写过一行 insert，删掉它，否则同一个插件会挂两次（重复 id）。
 
-## 凭证
+## 凭据
 
 按序取第一个非空值：
 
 1. 插件配置 `apiKey`（cordis patch 的 `config:`，或 `$DSH_HOME/plugins/dsh-jev-decide/config.json`）
 2. 环境变量 `TYPESAFE_API_KEY`
-3. DSH 凭证缝：`~/.dsh/.credentials.yaml` 里 `refs.TYPESAFE_AI_API_KEY`
+3. DSH 凭据存储：`~/.dsh/.credentials.yaml` 里 `refs.TYPESAFE_AI_API_KEY`（插件经 `ctx.credentials` 读取）
 
 ## 工具签名
 

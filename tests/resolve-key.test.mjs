@@ -1,7 +1,6 @@
 /**
  * resolveKey 的优先级与容错测试，外加一次带 fetch 桩的端到端检查：
- * 插件真的把凭证缝解析出的值放进了 Authorization 头。
- *
+ * 插件真的把凭据服务解析出的值放进了 Authorization 头。
  * 运行：node --test tests
  */
 import assert from 'node:assert/strict'
@@ -16,7 +15,7 @@ afterEach(() => {
 	else process.env.TYPESAFE_API_KEY = originalEnv
 })
 
-/** 凭证缝替身，记录被请求的 ref。 */
+/** 凭据服务替身，记录被请求的 ref。 */
 function credentialsStub(result) {
 	const asked = []
 	return {
@@ -42,50 +41,50 @@ describe('resolveKey 优先级', () => {
 		assert.equal(await resolveKey({ apiKey: '   ' }, credentialsStub({ value: 'x' })), 'from-env')
 	})
 
-	it('环境变量优先于凭证缝', async () => {
+	it('环境变量优先于凭据服务', async () => {
 		process.env.TYPESAFE_API_KEY = 'from-env'
 		const credentials = credentialsStub({ value: 'from-seam', source: 'file' })
 		assert.equal(await resolveKey({}, credentials), 'from-env')
 		assert.deepEqual(credentials.asked, [])
 	})
 
-	it('前两层都空时用凭证缝，并按 ref 名请求', async () => {
+	it('前两层都空时用凭据服务，并按 ref 名请求', async () => {
 		delete process.env.TYPESAFE_API_KEY
 		const credentials = credentialsStub({ value: 'from-seam', source: 'file' })
 		assert.equal(await resolveKey({}, credentials), 'from-seam')
 		assert.deepEqual(credentials.asked, [REF])
 	})
 
-	it('去掉凭证值两侧空白', async () => {
+	it('去掉凭据值两侧空白', async () => {
 		delete process.env.TYPESAFE_API_KEY
 		assert.equal(await resolveKey({}, credentialsStub({ value: '  from-seam\n', source: 'file' })), 'from-seam')
 	})
 })
 
 describe('resolveKey 容错', () => {
-	it('未挂载凭证缝 → undefined', async () => {
+	it('未挂载凭据服务 → undefined', async () => {
 		delete process.env.TYPESAFE_API_KEY
 		assert.equal(await resolveKey({}, undefined), undefined)
 	})
 
-	it('凭证缝未配置该 ref → undefined', async () => {
+	it('凭据服务未配置该 ref → undefined', async () => {
 		delete process.env.TYPESAFE_API_KEY
 		assert.equal(await resolveKey({}, credentialsStub(undefined)), undefined)
 	})
 
-	it('凭证缝返回空白值 → undefined', async () => {
+	it('凭据服务返回空白值 → undefined', async () => {
 		delete process.env.TYPESAFE_API_KEY
 		assert.equal(await resolveKey({}, credentialsStub({ value: '   ', source: 'file' })), undefined)
 	})
 
-	it('凭证缝抛错 → undefined（交给调用方报可读错误）', async () => {
+	it('凭据服务抛错 → undefined（交给调用方报可读错误）', async () => {
 		delete process.env.TYPESAFE_API_KEY
-		assert.equal(await resolveKey({}, credentialsStub(new Error('凭证文档损坏'))), undefined)
+		assert.equal(await resolveKey({}, credentialsStub(new Error('凭据文档损坏'))), undefined)
 	})
 })
 
 describe('工具执行时使用解析出的密钥', () => {
-	it('把凭证缝的值放进 Authorization 头', async () => {
+	it('把凭据服务的值放进 Authorization 头', async () => {
 		delete process.env.TYPESAFE_API_KEY
 		let definition
 		const ctx = {
